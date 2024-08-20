@@ -1,4 +1,5 @@
-const getState = ({ getStore, getActions, setStore }) => {
+
+const getState = ({ getStore, getActions, setStore }) => {//setStore acutualiza el store
 	return {
 		store: {
 			demo: [
@@ -11,8 +12,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					title: "SECOND",
 					background: "white",
 					initial: "white"
-				}
-			]
+				},
+			
+			],
+			// contacts: [] 
+
+			 listContacts:[] ///creamos un espacio donde alamacenaremos lo obtenido de la api asegun los metodos get,...
+			
+
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -37,6 +44,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+
+			getInfoContacts:()=>{
+				fetch("https://playground.4geeks.com/contact/agendas/Romi/contacts",{
+					method:"GET"
+				})
+				.then((response)=>response.json())
+				.then((data)=>setStore({listContacts:data.contacts}))//store es un bojeto y yo quiero apuntar al estado contacts y le quiero asignar el valor de da.contacts
+				.catch((error=>console.log(error)))
+			},
+
+			addContactToList:(contact)=>{
+				const store=getStore();
+				setStore({...store,listContacts:[...store.listContacts,contact]})
+			},
+			
+			createContact : (payload) => {
+				fetch("https://playground.4geeks.com/contact/agendas/Romi/contacts", {
+					method: "POST",
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(
+						payload
+					),
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						console.log(data)
+						actions.addContactToList(data)
+						console.log("Contacto agregado:", data);
+					})
+					.catch((error) => console.log(error));
+			},
+			deleteContact:()=>{
+				
 			}
 		}
 	};
