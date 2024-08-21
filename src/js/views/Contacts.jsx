@@ -23,8 +23,6 @@ const Contacts = () => {
             <ul className="list-group mt-3">
                 {store.listContacts.map((contact, index) => <CardContact contact={contact} key={contact.id} />)}
             </ul>
-
-
         </div>
     );
 };

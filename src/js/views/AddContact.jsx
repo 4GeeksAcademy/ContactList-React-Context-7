@@ -6,6 +6,7 @@ import { Context } from "../store/appContext.js";
 const AddContact = () => {
 
     const { store, actions } = useContext(Context)
+    let navigate =useNavigate();
 
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
@@ -21,13 +22,12 @@ const AddContact = () => {
         };
         actions.createContact(payload)
         alert("Se grabo los datos del contacto");
+        navigate("/");
         setName("");
         setPhone("");
         setEmail(""),
         setAddress("");
     }
-
-
 
     return (
         <div className="container">
@@ -56,9 +56,7 @@ const AddContact = () => {
             </form>
 
             <Link to="/"><a>volver a Contacts</a></Link>
-
         </div>
-
     );
 
 

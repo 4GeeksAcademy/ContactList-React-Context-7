@@ -6,6 +6,10 @@ import { Context } from '../store/appContext'
 const CardContact = ({ contact }) => {
     const { store, actions } = useContext(Context)
 
+    const eliminarContacto = () => {
+        actions.deleteContact(contact.id);
+    };
+
     return (
         <li className="list-group-item d-flex justify-content-center">
             <div className="d-flex align-items-center w-75">
@@ -27,7 +31,7 @@ const CardContact = ({ contact }) => {
                     <button className="btn btn-link p-0 me-3">
                         <i className="fa fa-eraser"></i>
                     </button>
-                    <button className="btn btn-link p-0">
+                    <button className="btn btn-link p-0" onClick={eliminarContacto}>
                         <i className="fa fa-trash fa-lg"></i>
                     </button>
                 </div>

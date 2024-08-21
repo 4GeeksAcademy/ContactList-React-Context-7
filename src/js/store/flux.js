@@ -13,12 +13,11 @@ const getState = ({ getStore, getActions, setStore }) => {//setStore acutualiza 
 					background: "white",
 					initial: "white"
 				},
-			
-			],
-			// contacts: [] 
 
-			 listContacts:[] ///creamos un espacio donde alamacenaremos lo obtenido de la api asegun los metodos get,...
-			
+			],
+
+			listContacts: [] ///creamos un espacio donde alamacenaremos lo obtenido de la api asegun los metodos get,...
+
 
 		},
 		actions: {
@@ -46,21 +45,21 @@ const getState = ({ getStore, getActions, setStore }) => {//setStore acutualiza 
 				setStore({ demo: demo });
 			},
 
-			getInfoContacts:()=>{
-				fetch("https://playground.4geeks.com/contact/agendas/Romi/contacts",{
-					method:"GET"
+			getInfoContacts: () => {
+				fetch("https://playground.4geeks.com/contact/agendas/Romi/contacts", {
+					method: "GET"
 				})
-				.then((response)=>response.json())
-				.then((data)=>setStore({listContacts:data.contacts}))//store es un bojeto y yo quiero apuntar al estado contacts y le quiero asignar el valor de da.contacts
-				.catch((error=>console.log(error)))
+					.then((response) => response.json())
+					.then((data) => setStore({ listContacts: data.contacts }))//store es un bojeto y yo quiero apuntar al estado contacts y le quiero asignar el valor de da.contacts
+					.catch((error => console.log(error)))
 			},
 
-			addContactToList:(contact)=>{
-				const store=getStore();
-				setStore({...store,listContacts:[...store.listContacts,contact]})
+			addContactToList: (contact) => {
+				const store = getStore();
+				setStore({ ...store, listContacts: [...store.listContacts, contact] })
 			},
-			
-			createContact : (payload) => {
+
+			createContact: (payload) => {
 				fetch("https://playground.4geeks.com/contact/agendas/Romi/contacts", {
 					method: "POST",
 					headers: {
@@ -78,11 +77,27 @@ const getState = ({ getStore, getActions, setStore }) => {//setStore acutualiza 
 					})
 					.catch((error) => console.log(error));
 			},
-			deleteContact:()=>{
-				
-			}
+			deleteContact: (id) => {
+				fetch(`https://playground.4geeks.com/contact/agendas/Romi/contacts/${id}`, {
+					method: "DELETE",
+				})
+					.then((response) => {
+						console.log(response)
+						if (response.ok) {
+							const store = getStore();
+							const updatedContacts = store.listContacts.filter(contact => contact.id !== id);
+							setStore({ listContacts: updatedContacts });
+							console.log(`Contacto con ID ${id} eliminado`);
+						} else {
+							console.log("Error al eliminar contacto");
+						}
+					})
+					.catch((error) => console.log(error));
+			},
+			
 		}
-	};
+	}
 };
+
 
 export default getState;
