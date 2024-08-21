@@ -71,8 +71,9 @@ const getState = ({ getStore, getActions, setStore }) => {//setStore acutualiza 
 				})
 					.then((response) => response.json())
 					.then((data) => {
-						console.log(data)
-						actions.addContactToList(data)
+						console.log(data);
+						const actions = getActions(); // Obtén el contexto de actions
+						actions.addContactToList(data);// Añade el contacto al estado
 						console.log("Contacto agregado:", data);
 					})
 					.catch((error) => console.log(error));
@@ -94,7 +95,29 @@ const getState = ({ getStore, getActions, setStore }) => {//setStore acutualiza 
 					})
 					.catch((error) => console.log(error));
 			},
-			
+
+			contactEdit: (id, newDates) => {
+
+				fetch(`https://playground.4geeks.com/contact/agendas/Romi/contacts/${id}`, {
+					method: "PUT",
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						"name": newDates.name,
+						"phone": newDates.numberPhone,
+						"email": newDates.email,
+						"address": newDates.address
+					})
+				})
+					.then((response) => response.json())
+					.then((data) => {
+
+					})
+					.catch((error) => console.log(error));
+
+
+			}
 		}
 	}
 };

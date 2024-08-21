@@ -16,9 +16,9 @@ const CardContact = ({ contact }) => {
                 <div className="col-md-3 d-flex justify-content-center">
                     <img
                         className="rounded-circle"
-                        src="https://picsum.photos/150/150/"
+                        src="https://picsum.photos/170/170/"
                         alt="Contact"
-                        style={{ width: "50px", height: "50px" }}
+
                     />
                 </div>
                 <div className="col-md-6">
@@ -31,9 +31,32 @@ const CardContact = ({ contact }) => {
                     <button className="btn btn-link p-0 me-3">
                         <i className="fa fa-eraser"></i>
                     </button>
-                    <button className="btn btn-link p-0" onClick={eliminarContacto}>
+                    {/* <button className="btn btn-link p-0" onClick={eliminarContacto}>
+                        <i className="fa fa-trash fa-lg"></i>
+                    </button> */}
+                    {/* <!-- Button trigger modal --> */}
+                    <button type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <i className="fa fa-trash fa-lg"></i>
                     </button>
+
+                    {/* <!-- Modal --> */}
+                    <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h1 className="modal-title fs-5" id="exampleModalLabel">Are you sure?</h1>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    If you delete this thing the etire universe will go down!
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Oh no!</button>
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={eliminarContacto}>Yes baby!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </li>
