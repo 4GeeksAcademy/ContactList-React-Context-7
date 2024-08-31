@@ -7,6 +7,7 @@ const CardContact = ({ contact }) => {
     const { store, actions } = useContext(Context)
 
     const eliminarContacto = () => {
+        console.log(contact)
         actions.deleteContact(contact.id);
     };
 
@@ -28,19 +29,19 @@ const CardContact = ({ contact }) => {
                     <p className="card-text mb-1">{contact.email}</p>
                 </div>
                 <div className="col-md-3 d-flex justify-content-end">
-                    <button className="btn btn-link p-0 me-3">
+                    <Link to={"/editContact/" + contact.id} className="btn btn-link p-0 me-3">
                         <i className="fa fa-eraser"></i>
-                    </button>
+                    </Link>
                     {/* <button className="btn btn-link p-0" onClick={eliminarContacto}>
                         <i className="fa fa-trash fa-lg"></i>
                     </button> */}
                     {/* <!-- Button trigger modal --> */}
-                    <button type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" data-bs-toggle="modal" data-bs-target={"#delete-contact-" + contact.id} >
                         <i className="fa fa-trash fa-lg"></i>
                     </button>
 
                     {/* <!-- Modal --> */}
-                    <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal fade" id={"delete-contact-" + contact.id} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header">

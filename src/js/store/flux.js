@@ -50,7 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {//setStore acutualiza 
 					method: "GET"
 				})
 					.then((response) => response.json())
-					.then((data) => setStore({ listContacts: data.contacts }))//store es un bojeto y yo quiero apuntar al estado contacts y le quiero asignar el valor de da.contacts
+					.then((data) => setStore({ listContacts: data.contacts }))//store es un bojeto y yo quiero apuntar al estado contacts y le quiero asignar el valor de data.contacts
 					.catch((error => console.log(error)))
 			},
 
@@ -96,23 +96,30 @@ const getState = ({ getStore, getActions, setStore }) => {//setStore acutualiza 
 					.catch((error) => console.log(error));
 			},
 
-			contactEdit: (id, newDates) => {
-
+			editContact: (id, contact) => {
+				const store = getStore()
 				fetch(`https://playground.4geeks.com/contact/agendas/Romi/contacts/${id}`, {
 					method: "PUT",
 					headers: {
 						'Content-Type': 'application/json'
 					},
-					body: JSON.stringify({
-						"name": newDates.name,
-						"phone": newDates.numberPhone,
-						"email": newDates.email,
-						"address": newDates.address
-					})
+					body: JSON.stringify(contact)
 				})
-					.then((response) => response.json())
+					.then((response) => {
+						if (response.ok) {
+							return response.json()
+						}
+					})
 					.then((data) => {
-
+						if (data) {
+							const updatedList = store.listContacts.map(contact => {
+								if (contact.id == id) {
+									contact = data
+								}
+								return contact
+							})
+							setStore({ listContacts: updatedList })
+						}
 					})
 					.catch((error) => console.log(error));
 

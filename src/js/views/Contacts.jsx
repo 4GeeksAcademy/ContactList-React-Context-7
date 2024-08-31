@@ -8,9 +8,9 @@ const Contacts = () => {
     const { store, actions } = useContext(Context)
     console.log(store.listContacts)
 
-    useEffect(() => {
-        actions.getInfoContacts()
-    }, [])
+    // useEffect(() => {
+        
+    // }, [])
 
     return (
 
@@ -21,7 +21,11 @@ const Contacts = () => {
                 </Link>
             </div>
             <ul className="list-group mt-3">
-                {store.listContacts.map((contact, index) => <CardContact contact={contact} key={contact.id} />)}
+                {store.listContacts && store.listContacts.length > 0 && store.listContacts.map((contact, index) => {
+                    return (
+                        <CardContact contact={contact} key={index} />
+                    )
+                })}
             </ul>
         </div>
     );
