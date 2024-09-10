@@ -45,12 +45,36 @@ const getState = ({ getStore, getActions, setStore }) => {//setStore acutualiza 
 				setStore({ demo: demo });
 			},
 
+			createUser: () => {
+				fetch("https://playground.4geeks.com/contact/agendas/Romi", {
+					method: "POST",
+
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						console.log(data);
+
+					})
+					.catch((error) => console.log(error));
+			},
+
 			getInfoContacts: () => {
 				fetch("https://playground.4geeks.com/contact/agendas/Romi/contacts", {
 					method: "GET"
 				})
-					.then((response) => response.json())
-					.then((data) => setStore({ listContacts: data.contacts }))//store es un bojeto y yo quiero apuntar al estado contacts y le quiero asignar el valor de data.contacts
+					.then((response) => {
+						if (response.status == 404) {
+							getActions().createUser()
+						}
+						if (response.ok) {
+							return response.json()
+						}
+					})
+					.then((data) => {
+						if (data) {
+							setStore({ listContacts: data.contacts })
+						}
+					})//store es un bojeto y yo quiero apuntar al estado contacts y le quiero asignar el valor de data.contacts
 					.catch((error => console.log(error)))
 			},
 

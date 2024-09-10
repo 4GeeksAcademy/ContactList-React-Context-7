@@ -36,7 +36,7 @@ const AddContact = () => {
         setName("");
         setPhone("");
         setEmail(""),
-            setAddress("");
+        setAddress("");
 
     }
 
